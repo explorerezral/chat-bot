@@ -1,44 +1,3 @@
-# 简介
-
-> ChatGPT近期以强大的对话和信息整合能力风靡全网，可以写代码、改论文、讲故事，几乎无所不能，这让人不禁有个大胆的想法，能否用他的对话模型把我们的微信打造成一个智能机器人，可以在与好友对话中给出意想不到的回应，而且再也不用担心女朋友影响我们 ~~打游戏~~ 工作了。
-
- 
-基于ChatGPT的微信聊天机器人，通过 [OpenAI](https://github.com/openai/openai-quickstart-python) 接口生成对话内容，使用 [itchat](https://github.com/littlecodersh/ItChat) 实现微信消息的接收和自动回复。已实现的特性如下：
-
-- [x] **文本对话：** 接收私聊及群组中的微信消息，使用ChatGPT生成回复内容，完成自动回复
-- [x] **规则定制化：** 支持私聊中按指定规则触发自动回复，支持对群组设置自动回复白名单
-- [x] **多账号：** 支持多微信账号同时运行
-- [x] **图片生成：** 支持根据描述生成图片，并自动发送至个人聊天或群聊
-- [x] **上下文记忆**：支持多轮对话记忆，且为每个好友维护独立的上下会话
-
-
-# 更新日志
->**2023.02.20：** 增加 [python-wechaty](https://github.com/wechaty/python-wechaty) 支持，Pad协议相对稳定，不易封号，但Token收费，可申请七天体验Token (使用参考[#244](https://github.com/zhayujie/chatgpt-on-wechat/pull/244)，contributed by [ZQ7](https://github.com/ZQ7))
-
->**2023.02.09：** 扫码登录存在封号风险，请谨慎使用，参考[#58](https://github.com/AutumnWhj/ChatGPT-wechat-bot/issues/158)
-
->**2023.02.05：** 在openai官方接口方案中 (GPT-3模型) 实现上下文对话
-
->**2022.12.19：** 引入 [itchat-uos](https://github.com/why2lyj/ItChat-UOS) 替换 itchat，解决由于不能登录网页微信而无法使用的问题，且解决Python3.9的兼容问题
-
->**2022.12.18：** 支持根据描述生成图片并发送，openai版本需大于0.25.0
-
->**2022.12.17：** 原来的方案是从 [ChatGPT页面](https://chat.openai.com/chat) 获取session_token，使用 [revChatGPT](https://github.com/acheong08/ChatGPT) 直接访问web接口，但随着ChatGPT接入Cloudflare人机验证，这一方案难以在服务器顺利运行。 所以目前使用的方案是调用 OpenAI 官方提供的 [API](https://beta.openai.com/docs/api-reference/introduction)，回复质量上基本接近于ChatGPT的内容，劣势是暂不支持有上下文记忆的对话，优势是稳定性和响应速度较好。
-
-# 使用效果
-
-### 个人聊天
-
-![single-chat-sample.jpg](docs/images/single-chat-sample.jpg)
-
-### 群组聊天
-
-![group-chat-sample.jpg](docs/images/group-chat-sample.jpg)
-
-### 图片生成
-
-![group-chat-sample.jpg](docs/images/image-create-sample.jpg)
-
 
 # 快速开始
 
@@ -137,27 +96,16 @@ python3 app.py
 touch nohup.out                                   # 首次运行需要新建日志文件                     
 nohup python3 app.py & tail -f nohup.out          # 在后台运行程序并通过日志输出二维码
 ```
-扫码登录后程序即可运行于服务器后台，此时可通过 `ctrl+c` 关闭日志，不会影响后台程序的运行。使用 `ps -ef | grep app.py | grep -v grep` 命令可查看运行于后台的进程，如果想要重新启动程序可以先 `kill` 掉对应的进程。日志关闭后如果想要再次打开只需输入 `tail -f nohup.out`。
+扫码登录后程序即可运行于服务器后台，此时可通过 `ctrl+c` 关闭日志，不会影响后台程序的运行。
+
+使用 `ps -ef | grep app.py | grep -v grep` 命令可查看运行于后台的进程，如果想要重新启动程序可以先 `kill` 掉对应的进程。
+
+日志关闭后如果想要再次打开只需输入 `tail -f nohup.out`。
 
 > **注意：** 如果 扫码后手机提示登录验证需要等待5s，而终端的二维码再次刷新并提示 `Log in time out, reloading QR code`，此时需参考此 [issue](https://github.com/zhayujie/chatgpt-on-wechat/issues/8) 修改一行代码即可解决。
 
 > **多账号支持：** 将 项目复制多份，分别启动程序，用不同账号扫码登录即可实现同时运行。
 
 > **特殊指令：** 用户向机器人发送 **#清除记忆** 即可清空该用户的上下文记忆。
-
-
-### 3.Docker部署
-
-参考文档 [Docker部署](https://github.com/limccn/chatgpt-on-wechat/wiki/Docker%E9%83%A8%E7%BD%B2)   (Contributed by [limccn](https://github.com/limccn))。
-
-
-## 常见问题
-
-FAQs： <https://github.com/zhayujie/chatgpt-on-wechat/wiki/FAQs>
-
-
-## 联系
-
-欢迎提交PR、Issues，以及Star支持一下。程序运行遇到问题优先查看 [常见问题列表](https://github.com/zhayujie/chatgpt-on-wechat/wiki/FAQs) ，其次前往 [Issues](https://github.com/zhayujie/chatgpt-on-wechat/issues) 中搜索，若无相似问题可创建Issue，或加微信 eijuyahz 交流。
 
  
