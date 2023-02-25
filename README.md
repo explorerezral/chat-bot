@@ -5,16 +5,61 @@
 
 ### 1. OpenAI账号注册
 
-前往 [OpenAI注册页面](https://beta.openai.com/signup) 创建账号，参考这篇 [教程](https://freepac.siterubix.com/chatgpt%e6%b3%a8%e5%86%8c%e6%95%99%e7%a8%8b%ef%bc%88%e5%ae%8c%e6%95%b4%e6%8c%87%e5%8d%97%ef%bc%89/) 可以通过虚拟手机号来接收验证码。创建完账号则前往 [API管理页面](https://beta.openai.com/account/api-keys) 创建一个 API Key 并保存下来，后面需要在项目中配置这个key。
+#### (1)接入OpenWrt路由器（有线无线均可），进入192.168.1.1 OpenWrt管理页面
 
-> 项目中使用的对话模型是 davinci，计费方式是约每 750 字 (包含请求和回复) 消耗 $0.02，图片生成是每张消耗 $0.016，账号创建有免费的 $18 额度，使用完可以更换邮箱重新注册。
+#### 顶端 `服务` -> `OpenClash`
+
+进入如下界面，如看到IP地址为日本、美国 且四个网址都正常连接即可访问 ChatGPT  网页()
+
+ ![](docs/images/2023-02-25 15-15-08 的屏幕截图.png)
+
+> OpenWrt搭建的梯子可能会卡慢，多刷新几次
+
+#### 如果还不可以访问，点击页面上的Yacd控制面板切换节点
+
+![](docs/images/2023-02-25 15-18-56 的屏幕截图.png)
+
+#### (2) 访问ChatGPT开始注册
+
+> [ChatGPT登录](https://chat.openai.com/auth/login)
+
+点击 Sign up 根据提示进行创建一个 OpenAI 账号；输入你的电子邮箱继续。如果你有 Gmail，你也可以点击下方的 Continue with Google 按钮直接以 Google 账号注册。
+
+到达输入电话号的界面时，进入以下网页
+
+> 在[虚拟号码平台](https://sms-activate.org/?ref=2730606)中获取账号绑定的外国手机号（国内手机号不可以用）
+
+点击左侧的 OpenAI 服务，如下图
+
+![企业微信截图_16767219217923](docs/images/企业微信截图_16767219217923.png)
+
+> 
+>
+> 2.15日更新：推荐购买马来西亚、美国号码，成功率高，其他国家号码可能会失败
+>
+> 
+
+购买后，页面内会出现电话号码
+
+在OpenAI注册框中输入号码发送验证码并填写验证码完成注册即可
+
+
+
+#### 注意 》》ChatGPT  web端在完成登录状态后即可接回原来的网络中，照常可以使用，但请不要清除缓存、cookie，以保持登录状态。
+
+
+
+> ChatGPT项目API中调用的对话模型是 davinci，API的NLP能力大大不如WEB端的能力，包括但不限于，自然语言生成能力、信息准确性、信息价值等。计费方式是约每 750 字 (包含请求和回复) 消耗 $0.02，图片生成是每张消耗 $0.016，账号创建有免费的 $18 额度，使用完可以更换邮箱重新注册。
+
+#### (3) API key 获取
+
+创建完账号则前往 [API管理页面](https://beta.openai.com/account/api-keys) 创建一个 API Key 并保存下来，后面需要在项目中配置这个key。
 
 
 ### 2.运行环境
 
 支持 Linux、MacOS、Windows 系统（可在Linux服务器上长期运行)，同时需安装 `Python`。 
 > 建议Python版本在 3.7.1~3.9.X 之间，3.10及以上版本在 MacOS 可用，其他系统上不确定能否正常运行。
-
 
 1.克隆项目代码：
 
@@ -66,14 +111,14 @@ cp config-template.json config.json
 
 + 群组聊天中，群名称需配置在 `group_name_white_list ` 中才能开启群聊自动回复。如果想对所有群聊生效，可以直接填写 `"group_name_white_list": ["ALL_GROUP"]`
 + 默认只要被人 @ 就会触发机器人自动回复；另外群聊天中只要检测到以 "@bot" 开头的内容，同样会自动回复（方便自己触发），这对应配置项 `group_chat_prefix`
-+ 可选配置: `group_name_keyword_white_list`配置项支持模糊匹配群名称，`group_chat_keyword`配置项则支持模糊匹配群消息内容，用法与上述两个配置项相同。（Contributed by [evolay](https://github.com/evolay))
++ 可选配置: `group_name_keyword_white_list`配置项支持模糊匹配群名称，`group_chat_keyword`配置项则支持模糊匹配群消息内容，用法与上述两个配置项相同。
 
 **3.其他配置**
 
 + 对于图像生成，在满足个人或群组触发条件外，还需要额外的关键词前缀来触发，对应配置 `image_create_prefix `
-+ 关于OpenAI对话及图片接口的参数配置（内容自由度、回复字数限制、图片大小等），可以参考 [对话接口](https://beta.openai.com/docs/api-reference/completions) 和 [图像接口](https://beta.openai.com/docs/api-reference/completions)  文档直接在 [代码](https://github.com/zhayujie/chatgpt-on-wechat/blob/master/bot/openai/open_ai_bot.py) `bot/openai/open_ai_bot.py` 中进行调整。
++ 关于OpenAI对话及图片接口的参数配置（内容自由度、回复字数限制、图片大小等），可以参考 [对话接口](https://beta.openai.com/docs/api-reference/completions) 和 [图像接口](https://beta.openai.com/docs/api-reference/completions)  文档直接在 [代码](https://github.com/explorerezral/chat-bot/blob/master/bot/openai/open_ai_bot.py) `bot/openai/open_ai_bot.py` 中进行调整。
 + `conversation_max_tokens`：表示能够记忆的上下文最大字数（一问一答为一组对话，如果累积的对话字数超出限制，就会优先移除最早的一组对话）
-+ `character_desc` 配置中保存着你对机器人说的一段话，他会记住这段话并作为他的设定，你可以为他定制任何人格      (关于会话上下文的更多内容参考该 [issue](https://github.com/zhayujie/chatgpt-on-wechat/issues/43))
++ `character_desc` 配置中保存着你对机器人说的一段话，他会记住这段话并作为他的设定，你可以为他定制任何人格      
 
 
 ## 运行
