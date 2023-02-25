@@ -11,13 +11,13 @@
 
 进入如下界面，如看到IP地址为日本、美国 且四个网址都正常连接即可访问 ChatGPT  网页()
 
- ![](docs/images/2023-02-25 15-15-08 的屏幕截图.png)
+ ![Openclash](docs/images/Openclash.png)
 
 > OpenWrt搭建的梯子可能会卡慢，多刷新几次
 
 #### 如果还不可以访问，点击页面上的Yacd控制面板切换节点
 
-![](docs/images/2023-02-25 15-18-56 的屏幕截图.png)
+![Yacd](docs/images/Yacd.png)
 
 #### (2) 访问ChatGPT开始注册
 
@@ -31,7 +31,7 @@
 
 点击左侧的 OpenAI 服务，如下图
 
-![企业微信截图_16767219217923](docs/images/企业微信截图_16767219217923.png)
+![number](docs/images/number.png)
 
 > 
 >
