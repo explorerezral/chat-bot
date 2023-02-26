@@ -36,7 +36,7 @@ cat /proc/cpuinfo
 ```
 如我所示的TP-Link AC1750 `cpu model`一栏即为CPU架构
 
-![architecture](/home/liuboyang/Pictures/architecture.png)
+![architecture](../docs/images/architecture.png)
 
 ## (3) 上传包
 
