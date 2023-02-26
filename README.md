@@ -11,7 +11,7 @@
 
 进入如下界面，如看到IP地址为日本、美国 且四个网址都正常连接即可访问 ChatGPT  网页()
 
- ![Openclash](docs/images/Openclash.png)
+ ![Openclash](docs/images/OpenClash.png)
 
 > OpenWrt搭建的梯子可能会卡慢，多刷新几次
 
